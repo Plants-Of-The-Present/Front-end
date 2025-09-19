@@ -12,7 +12,10 @@ import "@fontsource/nunito/700.css";
 import "./App.css";
 import TemplatePage from "./pages/template";
 import Login from "./pages/login";
-
+import Cadastro from "./pages/cadastro";
+import SolicitacaoEmAnalise from "./pages/SolicitacaoEmAnalise";
+import RecuperacaoSenha from "./pages/RecuperacaoDeSenha";
+import VerCertificados from "./pages/certificados";
 // Criação do tema global
 const theme = createTheme({
   palette: {
@@ -66,6 +69,10 @@ export default function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/template" element={<TemplatePage />} />
+          <Route path="/cadastro" element={<Cadastro />} /> 
+          <Route path="/analise" element={<SolicitacaoEmAnalise />} />
+          <Route path="/recuperacao" element={<RecuperacaoSenha />} />
+          <Route path="/certificados" element={<VerCertificados />} />
         </Routes>
       </Router>
     </ThemeProvider>
