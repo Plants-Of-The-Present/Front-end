@@ -10,6 +10,8 @@ import {
 import "@fontsource/nunito/400.css";
 import "@fontsource/nunito/700.css";
 import "./App.css";
+import TemplatePage from "./pages/template";
+import Login from "./pages/login";
 
 // Criação do tema global
 const theme = createTheme({
@@ -46,7 +48,7 @@ function Home() {
     </Container>
   );
 }
-
+/*
 function Login() {
   return (
     <Container sx={{ py: 4 }}>
@@ -54,7 +56,7 @@ function Login() {
     </Container>
   );
 }
-
+*/
 export default function App() {
   return (
     <ThemeProvider theme={theme}>
@@ -63,6 +65,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/template" element={<TemplatePage />} />
         </Routes>
       </Router>
     </ThemeProvider>
