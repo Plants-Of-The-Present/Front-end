@@ -1,6 +1,7 @@
-import { SxProps, Theme } from "@mui/material";
+import { height, maxHeight } from "@mui/system";
 
-export const boxStyle: SxProps<Theme> = {
+// Cadastro.styles.ts
+export const boxStyle = {
   background: "linear-gradient(to bottom right, #F5F5F0 30%, #F5F5F0)",
   height: "100vh",
   display: "flex",
@@ -11,15 +12,15 @@ export const boxStyle: SxProps<Theme> = {
   width: "100%",
 };
 
-export const paperStyle: SxProps<Theme> = {
-  padding: "50px 30px",
+export const paperStyle = {
+  padding: "40px",
   textAlign: "center",
   borderRadius: "30px",
   backgroundColor: "#2E7D32",
   width: "700px",
 };
 
-export const textFieldStyle: SxProps<Theme> = {
+export const textFieldStyle = {
   "& .MuiOutlinedInput-root": {
     "& fieldset": {
       borderColor: "#46685B",
@@ -35,18 +36,21 @@ export const textFieldStyle: SxProps<Theme> = {
       backgroundColor: "#D9D9D9",
       borderRadius: "20px",
     },
-    "& .MuiInputLabel-root": {
-      color: "#46685B",
-    },
-    "& .MuiInputLabel-root.Mui-focused": {
-      color: "#46685B",
-    },
   },
 };
 
-export const buttonStyle: SxProps<Theme> = {
+export const buttonStyle = {
   backgroundColor: "#D16B3F",
   borderRadius: "13px",
   padding: "10px 20px",
   fontSize: "1rem",
+};
+
+export const loginLinkStyle = {
+  textTransform: "none",
+  fontSize: "0.9rem",
+  color: "#2E7D32",
+  "&:hover": {
+    color: "#D16B3F",
+  },
 };

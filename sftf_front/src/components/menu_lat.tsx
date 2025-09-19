@@ -3,8 +3,7 @@ import { Box } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import { ButtonAtom } from "./ButtonAtom";
 import { ImageWithBadge } from "./ImageWithBadge";
-import EmojiPeopleIcon from "@mui/icons-material/EmojiPeople";
-import SearchIcon from "@mui/icons-material/Search";
+import AddIcon from '@mui/icons-material/Add';
 import InsertChartIcon from '@mui/icons-material/InsertChart';
 import WorkspacePremiumIcon from '@mui/icons-material/WorkspacePremium';
 import LogoutSharpIcon from "@mui/icons-material/LogoutSharp";
@@ -54,23 +53,26 @@ export const SideMenu: React.FC = () => {
         }}
       >
         <ButtonAtom
-          icon={<SearchIcon />}
-          label="Busca"
-          backgroundColor="#2E7D32"
-          isExpanded={isExpanded}
-          onClick={() => navigate("/Pesquisa")} // Redireciona para a página de pesquisa
-        />
-        <ButtonAtom
           icon={<InsertChartIcon />}
-          label="Dashboard"
+          label="Meus Créditos"
           backgroundColor="#2E7D32"
           isExpanded={isExpanded}
+         // onClick={() => navigate("/TemplatePage")} Esse vai pra home que será a tela de dashboards
         />
         <ButtonAtom
           icon={<WorkspacePremiumIcon/>}
           label="Certificados"
           backgroundColor="#2E7D32"
           isExpanded={isExpanded}
+          onClick={() => navigate("/certificados")} 
+        />
+
+        <ButtonAtom
+          icon={<AddIcon />}
+          label="Adicionar área"
+          backgroundColor="#2E7D32"
+          isExpanded={isExpanded}
+          onClick={() => navigate("/CadastroTerra")} // Redireciona para a página de cadastro de terra
         />
         
         <ButtonAtom
@@ -78,7 +80,7 @@ export const SideMenu: React.FC = () => {
           label="Sair"
           backgroundColor="#46685B"
           isExpanded={isExpanded}
-          //onClick={handleLogout}
+          onClick={() => navigate("/Login")}
         />
       </Box>
     </Box>
