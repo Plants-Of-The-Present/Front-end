@@ -15,7 +15,7 @@ export const paperStyle: SxProps<Theme> = {
   padding: "50px 30px",
   textAlign: "center",
   borderRadius: "30px",
-  backgroundColor: "#66BB6A",
+  backgroundColor: "#2E7D32",
   width: "700px",
 };
 

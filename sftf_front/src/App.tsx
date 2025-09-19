@@ -16,6 +16,9 @@ import Cadastro from "./pages/cadastro";
 import SolicitacaoEmAnalise from "./pages/SolicitacaoEmAnalise";
 import RecuperacaoSenha from "./pages/RecuperacaoDeSenha";
 import VerCertificados from "./pages/certificados";
+import CadastroTerra from "./pages/cadastroTerra";
+
+
 // Criação do tema global
 const theme = createTheme({
   palette: {
@@ -73,6 +76,7 @@ export default function App() {
           <Route path="/analise" element={<SolicitacaoEmAnalise />} />
           <Route path="/recuperacao" element={<RecuperacaoSenha />} />
           <Route path="/certificados" element={<VerCertificados />} />
+          <Route path="/cadastroTerra" element={<CadastroTerra />} />
         </Routes>
       </Router>
     </ThemeProvider>
