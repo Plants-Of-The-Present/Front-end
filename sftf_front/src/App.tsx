@@ -1,26 +1,70 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { CssBaseline } from "@mui/material";
+import {
+  ThemeProvider,
+  createTheme,
+  CssBaseline,
+  Container,
+  Typography,
+} from "@mui/material";
+import "@fontsource/nunito/400.css";
+import "@fontsource/nunito/700.css";
+import "./App.css";
 
+// Criação do tema global
+const theme = createTheme({
+  palette: {
+    text: {
+      primary: "#66BB6A", // Verde nos textos
+    },
+    background: {
+      default: "#F5F5F0", // Cor de fundo base
+    },
+  },
+  typography: {
+    fontFamily: "Nunito, sans-serif", // Fonte global
+  },
+  components: {
+    MuiCssBaseline: {
+      styleOverrides: {
+        body: {
+          margin: 0,
+          padding: 0,
+          background: "linear-gradient(to bottom right, #F5F5F0 30%, #F5F5F0)",
+          overflowX: "hidden", // Remove rolagem horizontal
+        },
+      },
+    },
+  },
+});
+
+// Exemplo de páginas
 function Home() {
-  return <h1>Página Inicial</h1>;
+  return (
+    <Container sx={{ py: 4 }}>
+      <Typography variant="h4">Página Inicial</Typography>
+    </Container>
+  );
 }
 
-function Sobre() {
-  return <h1>Sobre</h1>;
+function Login() {
+  return (
+    <Container sx={{ py: 4 }}>
+      <Typography variant="h4">Login</Typography>
+    </Container>
+  );
 }
 
 export default function App() {
   return (
-    <Router>
+    <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/sobre" element={<Sobre />} />
-      </Routes>
-    </Router>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+        </Routes>
+      </Router>
+    </ThemeProvider>
   );
 }
-
