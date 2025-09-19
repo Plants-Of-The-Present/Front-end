@@ -113,6 +113,7 @@ const Login: React.FC = () => {
                   ...buttonStyle,
                   alignSelf: "flex-end",
                 }}
+                onClick={() => navigate("/template")} 
               >
                 Entrar
               </Button>
