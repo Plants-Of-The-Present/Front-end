@@ -4,12 +4,12 @@ import {
   ThemeProvider,
   createTheme,
   CssBaseline,
-  Container,
-  Typography,
 } from "@mui/material";
 import "@fontsource/nunito/400.css";
 import "@fontsource/nunito/700.css";
 import "./App.css";
+
+// Importando suas páginas
 import TemplatePage from "./pages/template";
 import Login from "./pages/login";
 import Cadastro from "./pages/cadastro";
@@ -17,20 +17,22 @@ import SolicitacaoEmAnalise from "./pages/SolicitacaoEmAnalise";
 import RecuperacaoSenha from "./pages/RecuperacaoDeSenha";
 import VerCertificados from "./pages/certificados";
 import CadastroTerra from "./pages/cadastroTerra";
+import VerAreas from "./pages/areas"; 
+// ALTERADO: O caminho do arquivo de volta para 'H' maiúsculo
+import HomePage from "./pages/HomePage"; 
 
-
-// Criação do tema global
+// ... o resto do seu código do 'theme' continua igual ...
 const theme = createTheme({
   palette: {
     text: {
-      primary: "#66BB6A", // Verde nos textos
+      primary: "#66BB6A",
     },
     background: {
-      default: "#F5F5F0", // Cor de fundo base
+      default: "#F5F5F0",
     },
   },
   typography: {
-    fontFamily: "Nunito, sans-serif", // Fonte global
+    fontFamily: "Nunito, sans-serif",
   },
   components: {
     MuiCssBaseline: {
@@ -39,37 +41,23 @@ const theme = createTheme({
           margin: 0,
           padding: 0,
           background: "linear-gradient(to bottom right, #F5F5F0 30%, #F5F5F0)",
-          overflowX: "hidden", // Remove rolagem horizontal
+          overflowX: "hidden",
         },
       },
     },
   },
 });
 
-// Exemplo de páginas
-function Home() {
-  return (
-    <Container sx={{ py: 4 }}>
-      <Typography variant="h4">Página Inicial</Typography>
-    </Container>
-  );
-}
-/*
-function Login() {
-  return (
-    <Container sx={{ py: 4 }}>
-      <Typography variant="h4">Login</Typography>
-    </Container>
-  );
-}
-*/
+
 export default function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Router>
         <Routes>
-          <Route path="/" element={<Home />} />
+          {/* A rota continua a mesma, usando o componente importado */}
+          <Route path="/" element={<HomePage />} />
+          
           <Route path="/login" element={<Login />} />
           <Route path="/template" element={<TemplatePage />} />
           <Route path="/cadastro" element={<Cadastro />} /> 
@@ -77,6 +65,7 @@ export default function App() {
           <Route path="/recuperacao" element={<RecuperacaoSenha />} />
           <Route path="/certificados" element={<VerCertificados />} />
           <Route path="/cadastroTerra" element={<CadastroTerra />} />
+          <Route path="/areas" element={<VerAreas />} />
         </Routes>
       </Router>
     </ThemeProvider>
