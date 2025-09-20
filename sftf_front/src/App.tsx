@@ -1,11 +1,12 @@
-import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import React, { useState } from "react";
+import { BrowserRouter as Router, Routes, Route, useNavigate} from "react-router-dom";
 import {
   ThemeProvider,
   createTheme,
   CssBaseline,
   Container,
   Typography,
+  Button
 } from "@mui/material";
 import "@fontsource/nunito/400.css";
 import "@fontsource/nunito/700.css";
@@ -48,9 +49,35 @@ const theme = createTheme({
 
 // Exemplo de páginas
 function Home() {
+  const navigate = useNavigate();
+  const [isExpanded, setIsExpanded] = useState(true);
+
   return (
     <Container sx={{ py: 4 }}>
-      <Typography variant="h4">Página Inicial</Typography>
+      <Button
+        onClick={() => navigate("/Login")}
+        sx={{
+          width: "187px",
+          height: "66px",
+          backgroundColor: "#648A64",
+          color: "#fff",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: 1,
+          textTransform: "none",
+          "&:hover": {
+            backgroundColor: "#2E7D32",
+          },
+        }}
+      >
+        <Typography
+          variant="button"
+          sx={{ fontSize: "16px", fontWeight: "bold" }}
+        >
+          Login Teste
+        </Typography>
+      </Button>
     </Container>
   );
 }
