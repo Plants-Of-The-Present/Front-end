@@ -9,6 +9,8 @@ import {
   Checkbox,
   FormControlLabel,
   Box,
+  Alert,
+  CircularProgress,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import {
@@ -18,6 +20,8 @@ import {
   buttonStyle,
   loginLinkStyle,
 } from "../components/Cadastro.styles";
+import { apiService } from "../services/api";
+import { authManager } from "../utils/auth";
 
 interface SignUpFormData {
   email: string;
@@ -37,6 +41,9 @@ const Cadastro: React.FC = () => {
     document: "",
     profile: "",
   });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<string | null>(null);
 
   const navigate = useNavigate();
 
@@ -55,22 +62,55 @@ const Cadastro: React.FC = () => {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError(null);
+    setSuccess(null);
 
+    // Validações básicas
     if (formData.password !== formData.confirmPassword) {
-      alert("As senhas não coincidem!");
+      setError("As senhas não coincidem!");
       return;
     }
 
     if (!formData.profile) {
-      alert("Selecione um perfil!");
+      setError("Selecione um perfil!");
       return;
     }
 
-    console.log("Dados do formulário de cadastro:", formData);
-    alert("Cadastro realizado com sucesso! (simulação)");
-    navigate("/login");
+    if (formData.document.length !== 14) {
+      setError("CNPJ deve ter 14 dígitos");
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      const response = await apiService.register({
+        username: formData.email,
+        password: formData.password,
+        userType: formData.profile === "buyer" ? "BUYER" : "SUPPLIER",
+        companyName: formData.companyName,
+        companyCnpj: formData.document,
+      });
+
+      if (response.success && response.data) {
+        // Salvar dados de autenticação
+        authManager.saveAuthData(response.data.token, response.data.user);
+        setSuccess("Cadastro realizado com sucesso! Redirecionando...");
+
+        // Redirecionar após 2 segundos
+        setTimeout(() => {
+          navigate("/template");
+        }, 2000);
+      } else {
+        setError(response.error || "Erro no cadastro");
+      }
+    } catch (error) {
+      setError("Erro de conexão com o servidor");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -87,6 +127,19 @@ const Cadastro: React.FC = () => {
           >
             Cadastro
           </Typography>
+
+          {error && (
+            <Alert severity="error" sx={{ mb: 2 }}>
+              {error}
+            </Alert>
+          )}
+
+          {success && (
+            <Alert severity="success" sx={{ mb: 2 }}>
+              {success}
+            </Alert>
+          )}
+
           <form onSubmit={handleSubmit}>
             <Stack spacing={2}>
               <TextField
@@ -170,9 +223,20 @@ const Cadastro: React.FC = () => {
                 variant="contained"
                 type="submit"
                 fullWidth
-                sx={buttonStyle}
+                disabled={loading}
+                sx={{
+                  ...buttonStyle,
+                  position: 'relative',
+                }}
               >
-                Cadastre-se
+                {loading ? (
+                  <>
+                    <CircularProgress size={20} color="inherit" sx={{ mr: 1 }} />
+                    Cadastrando...
+                  </>
+                ) : (
+                  'Cadastre-se'
+                )}
               </Button>
             </Stack>
           </form>
