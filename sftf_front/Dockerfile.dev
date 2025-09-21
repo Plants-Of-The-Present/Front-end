@@ -1,0 +1,18 @@
+# Dockerfile.dev
+FROM node:20-alpine
+
+WORKDIR /app
+
+# Copiar package.json e package-lock.json
+COPY package*.json ./
+
+RUN npm install
+
+# Copiar todo o código
+COPY . .
+
+# Expor porta do dev server
+EXPOSE 3000
+
+# Rodar o React dev server
+CMD ["npm", "start"]

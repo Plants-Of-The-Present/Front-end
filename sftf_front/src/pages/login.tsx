@@ -9,6 +9,8 @@ import {
   Box,
   Checkbox,
   FormControlLabel,
+  Alert,
+  CircularProgress,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import {
@@ -17,6 +19,8 @@ import {
   textFieldStyle,
   buttonStyle,
 } from "../components/Login.styles";
+import { apiService } from "../services/api";
+import { authManager } from "../utils/auth";
 
 interface SignUpFormData {
   id_method: string;
@@ -30,6 +34,8 @@ const Login: React.FC = () => {
     password: "",
     keep_logged_in: false,
   });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const navigate = useNavigate();
 
@@ -41,9 +47,37 @@ const Login: React.FC = () => {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Dados do formulário:", formData);
+    setError(null);
+
+    if (!formData.id_method || !formData.password) {
+      setError("Por favor, preencha todos os campos");
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      const response = await apiService.login({
+        username: formData.id_method,
+        password: formData.password,
+      });
+
+      if (response.success && response.data) {
+        // Salvar dados de autenticação
+        authManager.saveAuthData(response.data.token, response.data.user);
+
+        // Redirecionar para a página principal
+        navigate("/template");
+      } else {
+        setError(response.error || "Erro no login");
+      }
+    } catch (error) {
+      setError("Erro de conexão com o servidor");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -59,6 +93,12 @@ const Login: React.FC = () => {
               <Typography variant="body1" color="#F5F5F0">
                 Para entrar, digite o seu e-mail e senha.
               </Typography>
+
+              {error && (
+                <Alert severity="error" sx={{ mb: 2 }}>
+                  {error}
+                </Alert>
+              )}
 
               <TextField
                 name="id_method"
@@ -109,13 +149,21 @@ const Login: React.FC = () => {
               <Button
                 type="submit"
                 variant="contained"
+                disabled={loading}
                 sx={{
                   ...buttonStyle,
                   alignSelf: "flex-end",
+                  position: 'relative',
                 }}
-                onClick={() => navigate("/template")} 
               >
-                Entrar
+                {loading ? (
+                  <>
+                    <CircularProgress size={20} color="inherit" sx={{ mr: 1 }} />
+                    Entrando...
+                  </>
+                ) : (
+                  'Entrar'
+                )}
               </Button>
             </Stack>
           </form>
