@@ -69,7 +69,7 @@ const Login: React.FC = () => {
         authManager.saveAuthData(response.data.token, response.data.user);
 
         // Redirecionar para a página principal
-        navigate("/template");
+        navigate("/areas");
       } else {
         setError(response.error || "Erro no login");
       }

@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Box } from "@mui/material";
+import { Box, Typography, Avatar } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import { ButtonAtom } from "./ButtonAtom";
-import { ImageWithBadge } from "./ImageWithBadge";
 import AddIcon from '@mui/icons-material/Add';
 import InsertChartIcon from '@mui/icons-material/InsertChart';
 import WorkspacePremiumIcon from '@mui/icons-material/WorkspacePremium';
 import LogoutSharpIcon from "@mui/icons-material/LogoutSharp";
+import { authManager } from "../utils/auth";
 
 
 export const SideMenu: React.FC = () => {
@@ -14,6 +14,13 @@ export const SideMenu: React.FC = () => {
   const [userName, setUserName] = useState("");
   const navigate = useNavigate();
   const handleHover = (hovering: boolean) => setIsExpanded(hovering);
+
+  useEffect(() => {
+    const user = authManager.getUser();
+    if (user) {
+      setUserName(user.companyName);
+    }
+  }, []);
 
   return (
     <Box
@@ -32,13 +39,36 @@ export const SideMenu: React.FC = () => {
       onMouseEnter={() => handleHover(true)}
       onMouseLeave={() => handleHover(false)}
     >
-      {/* Foto do perfil com redirecionamento */}
-    {/*<Link to="/perfil" style={{ textDecoration: "none" }}>  colocar o image with badge no meio   </Link> */}
-        <ImageWithBadge
-          src="images/image.png"
-          alt={userName}
-          isExpanded={isExpanded}
-        />
+      {/* Nome do usuário */}
+      <Box display="flex" flexDirection="column" alignItems="center" mb={2}>
+        <Avatar
+          sx={{
+            width: 60,
+            height: 60,
+            backgroundColor: "#4CAF50",
+            fontSize: "24px",
+            fontWeight: "bold"
+          }}
+        >
+          {userName.charAt(0).toUpperCase()}
+        </Avatar>
+        {isExpanded && (
+          <Typography
+            variant="h6"
+            color="white"
+            sx={{
+              fontFamily: "Nunito",
+              fontWeight: "bold",
+              fontSize: "16px",
+              marginTop: "8px",
+              textAlign: "center",
+              wordBreak: "break-word"
+            }}
+          >
+            {userName}
+          </Typography>
+        )}
+      </Box>
 
       {/* Botões */}
       <Box
@@ -57,7 +87,7 @@ export const SideMenu: React.FC = () => {
           label="Meus Créditos"
           backgroundColor="#2E7D32"
           isExpanded={isExpanded}
-         // onClick={() => navigate("/TemplatePage")} Esse vai pra home que será a tela de dashboards
+          onClick={() => navigate("/areas")} Esse vai pra home que será a tela de dashboards
         />
         <ButtonAtom
           icon={<WorkspacePremiumIcon/>}
@@ -80,7 +110,10 @@ export const SideMenu: React.FC = () => {
           label="Sair"
           backgroundColor="#46685B"
           isExpanded={isExpanded}
-          onClick={() => navigate("/Login")}
+          onClick={() => {
+            authManager.logout();
+            navigate("/Login");
+          }}
         />
       </Box>
     </Box>

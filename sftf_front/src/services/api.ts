@@ -32,7 +32,63 @@ interface AuthResponse {
   token: string;
 }
 
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:3000/api';
+interface CreateAreaRequest {
+  name: string;
+  point1X: number;
+  point1Y: number;
+  point2X: number;
+  point2Y: number;
+  point3X: number;
+  point3Y: number;
+  point4X: number;
+  point4Y: number;
+  isAllocated?: boolean;
+  buyerCnpj?: string;
+}
+
+interface AreaData {
+  id: string;
+  name: string;
+  point1X: number | string;
+  point1Y: number | string;
+  point2X: number | string;
+  point2Y: number | string;
+  point3X: number | string;
+  point3Y: number | string;
+  point4X: number | string;
+  point4Y: number | string;
+  totalArea: number | string;
+  carbonCredits: number | string;
+  isAllocated: boolean;
+  buyerCnpj?: string;
+  supplierCnpj: string;
+  supplier: UserData;
+  image?: {
+    id: string;
+    url: string;
+    point1X: number | string;
+    point1Y: number | string;
+    point2X: number | string;
+    point2Y: number | string;
+    point3X: number | string;
+    point3Y: number | string;
+    point4X: number | string;
+    point4Y: number | string;
+  };
+}
+
+interface AreasResponse {
+  areas: AreaData[];
+  pagination: {
+    currentPage: number;
+    totalPages: number;
+    totalItems: number;
+    hasNext: boolean;
+    hasPrev: boolean;
+  };
+}
+
+const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001/api';
 
 class ApiService {
   private async makeRequest<T>(
@@ -100,7 +156,15 @@ class ApiService {
   ): Promise<ApiResponse<void>> {
     return this.makeRequest<void>('/auth/change-password', 'PUT', passwordData, token);
   }
+
+  async getMyAreas(token: string): Promise<ApiResponse<AreasResponse>> {
+    return this.makeRequest<AreasResponse>('/areas/my-areas', 'GET', undefined, token);
+  }
+
+  async createArea(areaData: CreateAreaRequest, token: string): Promise<ApiResponse<{ area: AreaData }>> {
+    return this.makeRequest<{ area: AreaData }>('/areas', 'POST', areaData, token);
+  }
 }
 
 export const apiService = new ApiService();
-export type { LoginRequest, RegisterRequest, ApiResponse, UserData, AuthResponse };
+export type { LoginRequest, RegisterRequest, ApiResponse, UserData, AuthResponse, AreaData, AreasResponse, CreateAreaRequest };
