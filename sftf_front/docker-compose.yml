@@ -6,3 +6,9 @@ services:
     ports:
       - "3000:80"
     restart: unless-stopped
+    networks:
+      - carbon-credits-network
+      
+networks:
+  carbon-credits-network:
+    external: true
