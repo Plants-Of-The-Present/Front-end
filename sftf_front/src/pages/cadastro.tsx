@@ -99,10 +99,10 @@ const Cadastro: React.FC = () => {
         authManager.saveAuthData(response.data.token, response.data.user);
         setSuccess("Cadastro realizado com sucesso! Redirecionando...");
 
-        // Redirecionar após 2 segundos
+        // Redirecionar após 1 segundos
         setTimeout(() => {
-          navigate("/template");
-        }, 2000);
+          navigate("/areas");
+        }, 1000);
       } else {
         setError(response.error || "Erro no cadastro");
       }
