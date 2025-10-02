@@ -35,7 +35,7 @@ export const CardCertificado: React.FC<VarsCardCertificado> = ({
           <Stack direction="column" spacing={1} alignItems="left">
             <Typography
               sx={{
-                fontFamily: "Nunito",
+                fontFamily: "Belleza",
                 fontSize: "16px",
                 fontWeight: 700,
                 color: "#F5F5F0",
@@ -47,7 +47,7 @@ export const CardCertificado: React.FC<VarsCardCertificado> = ({
             </Typography>
             <Typography
               sx={{
-                fontFamily: "Nunito",
+                fontFamily: "Belleza",
                 fontSize: "12px",
                 fontWeight: 400,
                 color: "#F5F5F0",

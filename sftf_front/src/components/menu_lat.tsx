@@ -57,7 +57,7 @@ export const SideMenu: React.FC = () => {
             variant="h6"
             color="white"
             sx={{
-              fontFamily: "Nunito",
+              fontFamily: "Belleza",
               fontWeight: "bold",
               fontSize: "16px",
               marginTop: "8px",

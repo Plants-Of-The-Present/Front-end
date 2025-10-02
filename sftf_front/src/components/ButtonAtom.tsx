@@ -44,7 +44,7 @@ export const ButtonAtom: React.FC<ButtonAtomProps> = ({
       <Typography
         variant="body1"
         color="white"
-        sx={{ fontFamily: "Nunito", fontWeight: "bold", fontSize: "20px" }}
+        sx={{ fontFamily: "Belleza", fontWeight: "bold", fontSize: "20px" }}
       >
         {label}
       </Typography>

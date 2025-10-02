@@ -1,31 +1,36 @@
 import React from 'react';
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material'; // <-- Importar Typography
 
 import MenuLat from '../components/menu_lat';
-import { TituloPagina } from '../components/TituloPagina';
+// REMOVIDO: import { TituloPagina } from '../components/TituloPagina'; // <-- Removido
 import AreasPessoais from '../components/areasPessoais';
 
 const AreasPage = () => {
   return (
-    // ALTERADO: Este é o container principal que agora controla a altura.
-    // 'minHeight: '100vh'' garante que ele ocupe, no mínimo, a tela inteira.
     <Box sx={{ display: 'flex', minHeight: '100vh' }}>
       
-      {/* O MenuLat não precisa mais de um wrapper especial. */}
-      {/* Assumimos que o próprio componente MenuLat já tem seu fundo verde. */}
       <MenuLat />
 
-      {/* Este é o container do conteúdo principal. */}
-      {/* Ele vai se esticar automaticamente para preencher a altura do pai. */}
       <Box 
         component="main" 
         sx={{ 
           flexGrow: 1, 
           p: 3, 
-          backgroundColor: '#FFFFFF' // Fundo branco aplicado aqui
+          backgroundColor: '#FFFFFF', // Fundo branco aplicado aqui
         }}
       >
-        <TituloPagina titulo="Minhas Áreas Certificadas" />
+        {/* ALTERADO: Substituído <TituloPagina /> por Typography direto */}
+        <Typography 
+          variant="h3" // Escolha o variant que melhor se adequa ao tamanho do título
+          sx={{ 
+            fontFamily: 'Belleza', // <-- APLICAÇÃO DA FONTE AQUI
+            fontWeight: 'bold', // Opcional, para dar mais destaque
+            color: '#1B5E20', // Opcional: Cor verde para o título
+            mb: 4, // Margem inferior, para dar espaço ao conteúdo abaixo
+          }}
+        >
+          Minhas Áreas Certificadas
+        </Typography>
         
         <AreasPessoais />
       </Box>

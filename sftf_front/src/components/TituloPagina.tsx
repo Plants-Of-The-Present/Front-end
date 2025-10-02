@@ -19,7 +19,7 @@ export const TituloPagina: React.FC<TituloPaginaProps> = ({ titulo, backRoute })
     <Box sx={{ display: "flex", alignItems: "center", gap: "16px" }}>
       <Typography
         sx={{
-          fontFamily: "Nunito",
+          fontFamily: "Belleza",
           fontWeight: "bold",
           fontSize: "64px",
           color: "#2E7D32",

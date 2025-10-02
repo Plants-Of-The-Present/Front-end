@@ -139,7 +139,7 @@ const AreasPessoais = () => {
                 boxShadow: 'none'
             }}>
               <CardContent sx={{ p: { xs: 1, md: 6 } }}>
-                <Typography variant="h5" component="div" fontWeight="bold" sx={{ mb: 2, color: '#36454F' }}>
+                <Typography variant="h5" component="div" fontWeight="bold" fontFamily="Belleza" sx={{ mb: 2, color: '#36454F' }}>
                   Região: {area.name}
                 </Typography>
 
@@ -155,27 +155,27 @@ const AreasPessoais = () => {
                       />
                       <Box>
                         <Typography variant="body1">
-                          <Box component="span" sx={{ color: 'black' }}><strong>Créditos de Carbono:</strong></Box>
-                          <Box component="span" sx={{ color: '#555555' }}>{' '}{parseFloat((area.carbonCredits || 0).toString()).toLocaleString('pt-BR')}</Box>
+                          <Box component="span" sx={{ color: 'black', FontFamily: "Belleza"  }}><strong>Créditos de Carbono:</strong></Box>
+                          <Box component="span" sx={{ color: '#555555', FontFamily: "Belleza" }}>{' '}{parseFloat((area.carbonCredits || 0).toString()).toLocaleString('pt-BR')}</Box>
                         </Typography>
                         <Typography variant="body1">
-                          <Box component="span" sx={{ color: 'black' }}><strong>Área total:</strong></Box>
-                          <Box component="span" sx={{ color: '#555555' }}>{' '}{parseFloat((area.totalArea || 0).toString()).toLocaleString('pt-BR')} hectares</Box>
+                          <Box component="span" sx={{ color: 'black', FontFamily: "Belleza" }}><strong>Área total:</strong></Box>
+                          <Box component="span" sx={{ color: '#555555', FontFamily: "Belleza" }}>{' '}{parseFloat((area.totalArea || 0).toString()).toLocaleString('pt-BR')} hectares</Box>
                         </Typography>
                         <Typography variant="body1">
-                          <Box component="span" sx={{ color: 'black' }}><strong>Coordenadas:</strong></Box>
-                          <Box component="span" sx={{ color: '#555555', fontSize: '0.8rem', display: 'block' }}>
+                          <Box component="span" sx={{ color: 'black' , FontFamily: "Belleza" }}><strong>Coordenadas:</strong></Box>
+                          <Box component="span" sx={{ color: '#555555',  fontSize: '0.8rem', display: 'block', FontFamily: "Belleza" }}>
                             {formatCoordinates(area)}
                           </Box>
                         </Typography>
                       </Box>
                     </Box>
-                    <Typography variant="h6" fontWeight="bold" sx={{ color: '#36454F' }}>Proprietário:</Typography>
+                    <Typography variant="h6" fontWeight="bold" sx={{ color: '#36454F', FontFamily: "Belleza" }}>Proprietário:</Typography>
                     <Box sx={{ display: 'flex', alignItems: 'center', mt: 1 }}>
                       <Box>
                         <Typography variant="body1">
-                          <Box component="span" sx={{ color: 'black' }}><strong>Proprietário:</strong></Box>
-                          <Box component="span" sx={{ color: '#555555' }}>{' '}{getOwnerName(area)}</Box>
+                          <Box component="span" sx={{ color: 'black', FontFamily: "Belleza" }}><strong>Proprietário:</strong></Box>
+                          <Box component="span" sx={{ color: '#555555', FontFamily: "Belleza" }}>{' '}{getOwnerName(area)}</Box>
                         </Typography>
                         <Chip
                           icon={<CheckCircleIcon />}
@@ -195,7 +195,7 @@ const AreasPessoais = () => {
                       <Typography
                         variant="h6"
                         fontWeight="bold"
-                        sx={{ color: '#36454F', textAlign: 'left' }}
+                        sx={{ color: '#36454F', textAlign: 'left', FontFamily: "Belleza" }}
                       >
                         Imagem da área:
                       </Typography>
