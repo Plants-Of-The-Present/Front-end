@@ -16,8 +16,8 @@ import {
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
-// import { apiService } from "../services/api"; // Descomente quando for integrar
-// import { authManager } = "../utils/auth"; // Descomente quando for integrar
+import { apiService } from "../services/api"; // Descomente quando for integrar
+import { authManager } from "../utils/auth"; // Descomente quando for integrar
 
 // A URL da logo foi removida, pois não é mais necessária.
 
@@ -97,7 +97,7 @@ interface RegisterFormData {
   confirmPassword: string;
   companyName: string;
   cnpjCpf: string;
-  profileType: 'comprador' | 'provedor' | '';
+  profileType: 'BUYER' | 'SUPPLIER' | '';
 }
 
 const Cadastro: React.FC = () => {
@@ -125,7 +125,7 @@ const Cadastro: React.FC = () => {
   const handleProfileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData((prev) => ({
       ...prev,
-      profileType: e.target.value as 'comprador' | 'provedor',
+      profileType: e.target.value as 'BUYER' | 'SUPPLIER',
     }));
   };
 
@@ -147,23 +147,19 @@ const Cadastro: React.FC = () => {
     setLoading(true);
 
     try {
-      // Exemplo de como você chamaria sua API de cadastro
-      // const response = await apiService.register({
-      //   email: formData.email,
-      //   password: formData.password,
-      //   companyName: formData.companyName,
-      //   cnpjCpf: formData.cnpjCpf,
-      //   profileType: formData.profileType,
-      // });
-
-      // Simulação de sucesso de cadastro
-      const response = { success: true, data: { message: "Cadastro realizado com sucesso!" } };
+      const response = await apiService.register({
+        username: formData.email,
+        password: formData.password,
+        userType: formData.profileType,
+        companyName: formData.companyName,
+        companyCnpj: formData.cnpjCpf,
+      });
 
       if (response.success) {
         alert("Cadastro realizado com sucesso! Você será redirecionado para o login.");
         navigate("/login"); // Redireciona para a tela de login
       } else {
-        // setError(response.error || "Erro no cadastro"); // Descomente quando integrar com a API
+        setError(response.error || "Erro no cadastro");
         setError("Erro no cadastro (simulado)");
       }
     } catch (error) {
@@ -239,7 +235,7 @@ const Cadastro: React.FC = () => {
 
               <StyledTextField
                 name="cnpjCpf"
-                label="CNPJ ou CPF"
+                label="CNPJ"
                 variant="outlined"
                 fullWidth
                 value={formData.cnpjCpf}
@@ -261,12 +257,12 @@ const Cadastro: React.FC = () => {
                   sx={{ justifyContent: 'flex-start' }} // Alinha as opções à esquerda
                 >
                   <FormControlLabel
-                    value="comprador"
+                    value="BUYER"
                     control={<Radio sx={{ color: '#2E7D32', '&.Mui-checked': { color: '#1B5E20' } }} />}
                     label={<Typography variant="body2" sx={{ color: "text.secondary" }}>Comprador</Typography>}
                   />
                   <FormControlLabel
-                    value="provedor"
+                    value="SUPPLIER"
                     control={<Radio sx={{ color: '#2E7D32', '&.Mui-checked': { color: '#1B5E20' } }} />}
                     label={<Typography variant="body2" sx={{ color: "text.secondary" }}>Provedor de créditos de carbono</Typography>}
                   />
