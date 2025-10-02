@@ -12,14 +12,86 @@ import {
   Grid,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import {
-  boxStyle,
-  paperStyle,
-  textFieldStyle,
-  buttonStyle,
-} from "../components/Login.styles";
+// Remova esta linha se Login.styles.ts não existe ou não será usado:
+// import { boxStyle, paperStyle, textFieldStyle, buttonStyle } from "../components/Login.styles"; 
 import { apiService, CreateAreaRequest } from "../services/api";
 import { authManager } from "../utils/auth";
+import { SxProps, Theme } from "@mui/system"; // Importe SxProps e Theme
+
+// Definição dos estilos diretamente no arquivo
+const BACKGROUND_IMAGE_URL = "https://images.pexels.com/photos/15517974/pexels-photo-15517974.jpeg?_gl=1*1gereap*_ga*NTQ3MTc1NDA0LjE3NTkyODQ2NTM.*_ga_8JE65Q40S6*czE3NTkyODg5ODEkbzIkZzEkdDE3NTkyODkyNDMkajYwJGwwJGgw";
+
+const boxStyle: SxProps<Theme> = {
+  minHeight: "100vh",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  backgroundImage: `url(${BACKGROUND_IMAGE_URL})`,
+  backgroundSize: "cover",
+  backgroundPosition: "center",
+};
+
+const paperStyle: SxProps<Theme> = {
+  backgroundColor: "rgba(255, 255, 255, 0.4)", // Fundo semi-transparente
+  backdropFilter: "blur(10px)", // Efeito de blur (vidro fosco)
+  borderRadius: "16px",
+  padding: 4,
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  maxWidth: 800, // Ajuste a largura máxima conforme necessário
+  width: "90%",
+  boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)",
+  color: "white", // Cor padrão de texto para o Paper, se não sobrescrita
+};
+
+const textFieldStyle: SxProps<Theme> = {
+  "& .MuiOutlinedInput-root": {
+    backgroundColor: 'rgba(255, 255, 255, 0.7)', // Fundo mais opaco para o input
+    borderRadius: "8px",
+    "& fieldset": {
+      borderColor: "transparent",
+      transition: 'box-shadow 0.3s ease-in-out',
+    },
+    "&:hover fieldset": {
+      borderColor: "transparent",
+      boxShadow: '0 0 10px rgba(46, 125, 50, 0.4)',
+    },
+    "&.Mui-focused fieldset": {
+      borderColor: "transparent",
+      boxShadow: '0 0 10px rgba(46, 125, 50, 0.6)',
+    },
+    "& input": {
+      color: "#333", // Cor do texto digitado
+      fontFamily: '"Belleza", sans-serif', // <-- FONTE APLICADA AQUI (input)
+    },
+  },
+  "& .MuiInputLabel-root": {
+    color: "#4CAF50", // Cor do label
+    fontFamily: '"Belleza", sans-serif', // <-- FONTE APLICADA AQUI (label)
+  },
+  "& .MuiInputLabel-root.Mui-focused": {
+    color: "#2E7D32", // Cor do label focado
+  },
+  // Estilo para o helperText
+  "& .MuiFormHelperText-root": {
+    fontFamily: '"Belleza", sans-serif', // <-- FONTE APLICADA AQUI (helperText)
+  },
+};
+
+const buttonStyle: SxProps<Theme> = {
+  backgroundColor: "#4CAF50",
+  color: "white",
+  padding: "12px 24px",
+  borderRadius: "8px",
+  "&:hover": {
+    backgroundColor: "#2E7D32",
+  },
+  fontFamily: '"Belleza", sans-serif', // <-- FONTE APLICADA AQUI (button)
+  fontSize: "16px",
+  fontWeight: "bold",
+};
+
 
 interface CadastroTerraFormData {
   areaName: string;
@@ -177,31 +249,40 @@ const CadastroTerra: React.FC = () => {
         <Paper sx={paperStyle}>
           <form onSubmit={handleSubmit}>
             <Stack spacing={3}>
-              <Typography variant="h3" sx={{ color: "#F5F5F0" }}>
+              {/* Título "Cadastro de Terra" */}
+              <Typography variant="h3" sx={{ color: "#F5F5F0", fontFamily: '"Belleza", sans-serif' }}> 
                 Cadastro de Terra
               </Typography>
 
-              <Typography variant="body1" sx={{ color: "#F5F5F0" }}>
+              {/* Descrição inicial */}
+              <Typography variant="body1" sx={{ color: "#F5F5F0", fontFamily: '"Belleza", sans-serif' }}> 
                 Informe os dados da área abaixo. As coordenadas serão usadas para calcular automaticamente a área total e os créditos de carbono.
               </Typography>
 
+              {/* Mensagem de Erro */}
               {error && (
                 <Alert severity="error" sx={{ mb: 2 }}>
-                  {error}
+                  <Typography sx={{ fontFamily: '"Belleza", sans-serif' }}> 
+                    {error}
+                  </Typography>
                 </Alert>
               )}
 
+              {/* Mensagem de Sucesso */}
               {success && (
                 <Alert severity="success" sx={{ mb: 2 }}>
-                  {success}
+                  <Typography sx={{ fontFamily: '"Belleza", sans-serif' }}> 
+                    {success}
+                  </Typography>
                 </Alert>
               )}
 
+              {/* TextField: Nome da Área */}
               <TextField
                 name="areaName"
                 label="Nome da Área"
                 variant="outlined"
-                sx={textFieldStyle}
+                sx={textFieldStyle} // Estilo definido acima
                 fullWidth
                 required
                 value={formData.areaName}
@@ -209,17 +290,19 @@ const CadastroTerra: React.FC = () => {
                 disabled={loading}
               />
 
-              <Typography variant="h6" sx={{ color: "#F5F5F0", mt: 2 }}>
+              {/* Título: Coordenadas */}
+              <Typography variant="h6" sx={{ color: "#F5F5F0", mt: 2, fontFamily: '"Belleza", sans-serif' }}> 
                 Coordenadas dos 4 pontos da área (em graus decimais):
               </Typography>
 
+              {/* Fields de Coordenadas (já pegam o estilo de textFieldStyle) */}
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={6}>
                   <TextField
                     name="point1X"
                     label="Ponto 1 - Longitude"
                     variant="outlined"
-                    sx={textFieldStyle}
+                    sx={textFieldStyle} 
                     fullWidth
                     required
                     type="number"
@@ -228,7 +311,7 @@ const CadastroTerra: React.FC = () => {
                     onChange={handleInputChange}
                     disabled={loading}
                     helperText="Ex: -46.633308"
-                    FormHelperTextProps={{ sx: { color: "#FFF" } }}
+                    FormHelperTextProps={{ sx: { color: "#FFF", fontFamily: '"Belleza", sans-serif' } }} // <-- HelperText personalizado
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -245,7 +328,7 @@ const CadastroTerra: React.FC = () => {
                     onChange={handleInputChange}
                     disabled={loading}
                     helperText="Ex: -23.550520"
-                    FormHelperTextProps={{ sx: { color: "#FFF" } }}
+                    FormHelperTextProps={{ sx: { color: "#FFF", fontFamily: '"Belleza", sans-serif' } }} // <-- HelperText personalizado
                   />
                 </Grid>
               </Grid>
@@ -349,10 +432,12 @@ const CadastroTerra: React.FC = () => {
                 </Grid>
               </Grid>
 
-              <Typography sx={{ color: 'white', textAlign: 'left' }}>
+              {/* Texto "Área já foi vendida..." */}
+              <Typography sx={{ color: 'white', textAlign: 'left', fontFamily: '"Belleza", sans-serif' }}> 
                 Área já foi vendida a um cliente?
               </Typography>
 
+              {/* TextField: Select 'sold' */}
               <TextField
                 select
                 name="sold"
@@ -360,51 +445,59 @@ const CadastroTerra: React.FC = () => {
                 onChange={handleInputChange}
                 disabled={loading}
                 sx={{
-                  "& .MuiInputLabel-root": { color: "#FFF" },
+                  "& .MuiInputLabel-root": { color: "#FFF", fontFamily: '"Belleza", sans-serif' }, 
                   "& .MuiOutlinedInput-notchedOutline": { borderColor: "#FFF" },
-                  "& .MuiInputBase-root": { color: "#FFF" },
+                  "& .MuiInputBase-root": { color: "#FFF", fontFamily: '"Belleza", sans-serif' }, 
                   "& .MuiSelect-icon": { color: "#FFF" },
                 }}
                 InputLabelProps={{
-                  sx: { color: "#FFF" },
+                  sx: { color: "#FFF", fontFamily: '"Belleza", sans-serif' }, 
                 }}
               >
-                <MenuItem value="nao">Não</MenuItem>
-                <MenuItem value="sim">Sim</MenuItem>
+                {/* MenuItems - Para estilizá-los, o ideal seria sobrescrever o Theme ou usar StyledComponent.
+                    Mas para este caso, podemos aplicar o sx diretamente, pois são poucos. */}
+                <MenuItem value="nao" sx={{ fontFamily: '"Belleza", sans-serif' }}>Não</MenuItem>
+                <MenuItem value="sim" sx={{ fontFamily: '"Belleza", sans-serif' }}>Sim</MenuItem>
               </TextField>
 
+              {/* TextField: CNPJ do Comprador */}
               {formData.sold === "sim" && (
                 <TextField
                   name="buyerCnpj"
                   label="CNPJ do Comprador"
                   variant="outlined"
-                  sx={textFieldStyle}
+                  sx={textFieldStyle} 
                   fullWidth
                   required
                   value={formData.buyerCnpj}
                   onChange={handleInputChange}
                   disabled={loading}
                   helperText="Digite apenas números"
-                  FormHelperTextProps={{ sx: { color: "#FFF" } }}
+                  FormHelperTextProps={{ sx: { color: "#FFF", fontFamily: '"Belleza", sans-serif' } }} // <-- HelperText personalizado
                 />
               )}
 
+              {/* Botão de Submit */}
               <Button
                 type="submit"
                 variant="contained"
                 disabled={loading}
                 sx={{
-                  ...buttonStyle,
+                  ...buttonStyle, // Estilo definido acima
                   alignSelf: "flex-end",
                 }}
               >
                 {loading ? (
                   <>
-                    <CircularProgress size={20} sx={{ mr: 1 }} />
-                    Cadastrando...
+                    <CircularProgress size={20} sx={{ mr: 1, color: "white" }} /> 
+                    <Typography component="span" sx={{ fontFamily: '"Belleza", sans-serif', color: "white" }}> 
+                      Cadastrando...
+                    </Typography>
                   </>
                 ) : (
-                  "Cadastrar Terra"
+                  <Typography component="span" sx={{ fontFamily: '"Belleza", sans-serif', color: "white" }}> 
+                    Cadastrar Terra
+                  </Typography>
                 )}
               </Button>
             </Stack>
